@@ -1,0 +1,17 @@
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\bin\Debug\net6.0-windows\Курсач_Blowfish.exe
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\bin\Debug\net6.0-windows\Курсач_Blowfish.deps.json
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\bin\Debug\net6.0-windows\Курсач_Blowfish.runtimeconfig.json
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\bin\Debug\net6.0-windows\Курсач_Blowfish.dll
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\bin\Debug\net6.0-windows\Курсач_Blowfish.pdb
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.csproj.AssemblyReference.cache
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.Form1.resources
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.csproj.GenerateResource.cache
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.AssemblyInfoInputs.cache
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.AssemblyInfo.cs
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.csproj.CoreCompileInputs.cache
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.dll
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\refint\Курсач_Blowfish.dll
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.pdb
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\Курсач_Blowfish.genruntimeconfig.cache
+C:\Users\Fabutnm\source\repos\Курсач_Blowfish\obj\Debug\net6.0-windows\ref\Курсач_Blowfish.dll
