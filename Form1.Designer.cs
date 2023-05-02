@@ -41,6 +41,7 @@
             keyBox = new TextBox();
             button3 = new Button();
             button1 = new Button();
+            label3 = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -71,13 +72,13 @@
             // загрузитьToolStripMenuItem
             // 
             загрузитьToolStripMenuItem.Name = "загрузитьToolStripMenuItem";
-            загрузитьToolStripMenuItem.Size = new Size(129, 22);
+            загрузитьToolStripMenuItem.Size = new Size(180, 22);
             загрузитьToolStripMenuItem.Text = "Загрузить";
             // 
             // сохранитьToolStripMenuItem
             // 
             сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            сохранитьToolStripMenuItem.Size = new Size(129, 22);
+            сохранитьToolStripMenuItem.Size = new Size(180, 22);
             сохранитьToolStripMenuItem.Text = "Сохранить";
             // 
             // label1
@@ -103,13 +104,13 @@
             textBox2.Location = new Point(338, 69);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(390, 155);
+            textBox2.Size = new Size(373, 155);
             textBox2.TabIndex = 4;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(506, 53);
+            label2.Location = new Point(479, 53);
             label2.Name = "label2";
             label2.Size = new Size(117, 13);
             label2.TabIndex = 5;
@@ -154,11 +155,21 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click_1;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(699, 255);
+            label3.Name = "label3";
+            label3.Size = new Size(29, 13);
+            label3.TabIndex = 12;
+            label3.Text = "v1.0";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(740, 277);
+            Controls.Add(label3);
             Controls.Add(button1);
             Controls.Add(button3);
             Controls.Add(keyBox);
@@ -193,5 +204,6 @@
         private TextBox keyBox;
         private Button button3;
         private Button button1;
+        private Label label3;
     }
 }

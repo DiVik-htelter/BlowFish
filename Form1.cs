@@ -328,7 +328,7 @@ namespace Курсач_Blowfish
 
             // тут должно быть расширение паундовых ключей, модификация S - блока 
             // с помощью сети фейстеля и блаблабла
-    
+
             blowfish(ref textEbyte, ref textDbyte, 'E');
 
             for (int i = 0; i < textDbyte.Length; i++)
@@ -366,8 +366,8 @@ namespace Курсач_Blowfish
 
             // ксорим
             for (int i = 0; i < 18; i++) // ксорим ключи
-                __Keys32b[i] ^= join_8bits_to_32bits(ref KeyByte, i);                       
-            
+                __Keys32b[i] ^= join_8bits_to_32bits(ref KeyByte, i);
+
             blowfish(ref textEbyte, ref textDbyte, 'D');
 
             for (int i = 0; i < textDbyte.Length; i++)
