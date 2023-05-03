@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace Курсач_Blowfish
 {
@@ -305,35 +306,36 @@ namespace Курсач_Blowfish
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            string textE = textBox1.Text;
-            string keyRStr = keyBox.Text;
 
             textBox2.Text = string.Empty;
+            for (; textBox1.Text.Length % 8 > 0;) textBox1.Text += ' '; // достраиваем что бы были блоки по 8 байт(64 бита)
 
-            for (; textE.Length % 8 > 0;) textE += ' '; // достраиваем что бы были блоки по 8 байт(64 бита)
-            for (int i = 0; keyRStr.Length < 72; i++)
-                keyRStr += keyRStr.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
+            for (int i = 0; keyBox.Text.Length < 72; i++)
+                keyBox.Text += keyBox.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
 
-
-            //char[] testText = new char[textE.Length];   // массив символов текста
-            byte[] textEbyte = new byte[textE.Length];  // массив символов текста в байтах
-            byte[] KeyByte = new byte[keyRStr.Length];  // массив символов ключа в байтах
-            byte[] textDbyte = new byte[textE.Length];
-            for (int i = 0; i < keyRStr.Length; i++) KeyByte[i] = (byte)(keyRStr[i]);
-            for (int i = 0; i < textE.Length; i++) textEbyte[i] = (byte)(textE[i]);
-
-            // ксорим
+            byte[] KeyByte = new byte[keyBox.Text.Length];  // массив символов ключа в байтах
+            for (int i = 0; i < keyBox.Text.Length; i++) KeyByte[i] = (byte)(keyBox.Text[i]);
             for (int i = 0; i < 18; i++) // ксорим ключи
                 __Keys32b[i] ^= join_8bits_to_32bits(ref KeyByte, i);
+
+            byte[] textEbyte = Encoding.Default.GetBytes(textBox1.Text);  // массив символов текста в байтах
+            for (int i = 0; i < textBox1.Text.Length; i++) textEbyte[i] = (byte)(textBox1.Text[i]);
+            textBox1.Text = Encoding.UTF8.GetString(textEbyte);
 
             // тут должно быть расширение паундовых ключей, модификация S - блока 
             // с помощью сети фейстеля и блаблабла
 
+            byte[] textDbyte = new byte[textBox1.Text.Length + 8];
             blowfish(ref textEbyte, ref textDbyte, 'E');
 
-            for (int i = 0; i < textDbyte.Length; i++)
-                textBox2.Text += (char)textDbyte[i];
+            //byte[] textEbyteTest = new byte[textBox1.Text.Length];
+            //blowfish(ref textDbyte, ref textEbyteTest, 'D');
 
+            for (int i = 0; i < textDbyte.Length; i++)
+                textBox2.Text += textDbyte[i] + " ";
+
+            //byte[] bytes = Encoding.Default.GetBytes(str);
+            //str = Encoding.UTF8.GetString(bytes);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -346,32 +348,55 @@ namespace Курсач_Blowfish
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
-
-            string textE = textBox1.Text;
-            string keyRStr = keyBox.Text;
             textBox2.Text = string.Empty;
+            //for (; textBox1.Text.Length % 8 > 0;) textBox1.Text += ' '; // достраиваем что бы были блоки по 8 байт(64 бита)
+            //int lenth = textBox1.Text.Length;
+            //if (lenth % 8 > 0) lenth += lenth % 8; // достраиваем исскуственно что бы было кратно 64 битам
+            string[] text_E_List = textBox1.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (; textE.Length % 8 > 0;) textE += ' '; // достраиваем что бы были блоки по 8 байт(64 бита)
-            for (int i = 0; keyRStr.Length < 72; i++)
-                keyRStr += keyRStr.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
+            for (int i = 0; keyBox.Text.Length < 72; i++)
+                keyBox.Text += keyBox.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
 
-
-            //char[] testText = new char[textE.Length];   // массив символов текста
-            byte[] textEbyte = new byte[textE.Length];  // массив символов текста в байтах
-            byte[] KeyByte = new byte[keyRStr.Length];  // массив символов ключа в байтах
-            byte[] textDbyte = new byte[textE.Length];  // массив в котрый запишется зашифрованное сообщение
-
-            for (int i = 0; i < keyRStr.Length; i++) KeyByte[i] = (byte)(keyRStr[i]);
-            for (int i = 0; i < textE.Length; i++) textEbyte[i] = (byte)(textE[i]);
-
-            // ксорим
+            byte[] KeyByte = new byte[keyBox.Text.Length];  // массив символов ключа в байтах
+            for (int i = 0; i < keyBox.Text.Length; i++) KeyByte[i] = (byte)(keyBox.Text[i]);
             for (int i = 0; i < 18; i++) // ксорим ключи
                 __Keys32b[i] ^= join_8bits_to_32bits(ref KeyByte, i);
 
+            byte[] textEbyte = new byte[text_E_List.Length];
+
+            for (int i = 0; i < text_E_List.Length; i++) textEbyte[i] = Convert.ToByte(text_E_List[i]);
+            //byte[] textEbyte = Encoding.Default.GetBytes(textBox1.Text);  // массив символов текста в байтах
+            //for (int i = 0; i < textBox1.Text.Length; i++) textEbyte[i] = (byte)(textBox1.Text[i]);
+            //textBox1.Text = Encoding.UTF8.GetString(textEbyte);
+
+
+
+            byte[] textDbyte = new byte[textBox1.Text.Length + 8];  // массив в котрый запишется зашифрованное сообщение
             blowfish(ref textEbyte, ref textDbyte, 'D');
 
             for (int i = 0; i < textDbyte.Length; i++)
                 textBox2.Text += (char)textDbyte[i];
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл
+            string filename = openFileDialog1.FileName;
+            // читаем файл в строку
+            string fileText = System.IO.File.ReadAllText(filename);
+            textBox1.Text = fileText;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = string.Empty;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = string.Empty;
         }
     }
 }

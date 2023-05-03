@@ -42,6 +42,11 @@
             button3 = new Button();
             button1 = new Button();
             label3 = new Label();
+            openFileDialog1 = new OpenFileDialog();
+            button2 = new Button();
+            button4 = new Button();
+            зашифрованыйТекстToolStripMenuItem = new ToolStripMenuItem();
+            стандартныйТекстToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -72,13 +77,15 @@
             // загрузитьToolStripMenuItem
             // 
             загрузитьToolStripMenuItem.Name = "загрузитьToolStripMenuItem";
-            загрузитьToolStripMenuItem.Size = new Size(180, 22);
+            загрузитьToolStripMenuItem.Size = new Size(129, 22);
             загрузитьToolStripMenuItem.Text = "Загрузить";
+            загрузитьToolStripMenuItem.Click += загрузитьToolStripMenuItem_Click;
             // 
             // сохранитьToolStripMenuItem
             // 
+            сохранитьToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зашифрованыйТекстToolStripMenuItem, стандартныйТекстToolStripMenuItem });
             сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            сохранитьToolStripMenuItem.Size = new Size(180, 22);
+            сохранитьToolStripMenuItem.Size = new Size(129, 22);
             сохранитьToolStripMenuItem.Text = "Сохранить";
             // 
             // label1
@@ -131,7 +138,7 @@
             keyBox.Location = new Point(13, 243);
             keyBox.MaxLength = 72;
             keyBox.Name = "keyBox";
-            keyBox.Size = new Size(319, 21);
+            keyBox.Size = new Size(328, 21);
             keyBox.TabIndex = 7;
             keyBox.Text = "Random Key";
             // 
@@ -162,13 +169,52 @@
             label3.Name = "label3";
             label3.Size = new Size(29, 13);
             label3.TabIndex = 12;
-            label3.Text = "v1.0";
+            label3.Text = "v1.1";
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog1.Filter = "Все файлы (*.*)|*.*";
+            // 
+            // button2
+            // 
+            button2.Location = new Point(257, 82);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 13;
+            button2.Text = "<-- Clear";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(257, 186);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 14;
+            button4.Text = "Clear -->";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // зашифрованыйТекстToolStripMenuItem
+            // 
+            зашифрованыйТекстToolStripMenuItem.Name = "зашифрованыйТекстToolStripMenuItem";
+            зашифрованыйТекстToolStripMenuItem.Size = new Size(184, 22);
+            зашифрованыйТекстToolStripMenuItem.Text = "Зашифрованый текст";
+            // 
+            // стандартныйТекстToolStripMenuItem
+            // 
+            стандартныйТекстToolStripMenuItem.Name = "стандартныйТекстToolStripMenuItem";
+            стандартныйТекстToolStripMenuItem.Size = new Size(184, 22);
+            стандартныйТекстToolStripMenuItem.Text = "Стандартный текст";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(740, 277);
+            Controls.Add(button4);
+            Controls.Add(button2);
             Controls.Add(label3);
             Controls.Add(button1);
             Controls.Add(button3);
@@ -205,5 +251,10 @@
         private Button button3;
         private Button button1;
         private Label label3;
+        private OpenFileDialog openFileDialog1;
+        private Button button2;
+        private Button button4;
+        private ToolStripMenuItem зашифрованыйТекстToolStripMenuItem;
+        private ToolStripMenuItem стандартныйТекстToolStripMenuItem;
     }
 }
