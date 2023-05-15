@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Xml.Linq;
 
 namespace Курсач_Blowfish
 {
@@ -299,10 +300,10 @@ namespace Курсач_Blowfish
             //        Sbox[i,j] = join_8bits_to_32bits(ref init_blocks8b,0);
             //        Sbox[i, j + 1] = join_8bits_to_32bits(ref init_blocks8b, 4);
             //    }
-            
+
         }
 
-        void blowfish(ref byte[] encode, ref byte[] decode,uint[] key, char mode) // mode - 'E' or 'D'
+        void blowfish(ref byte[] encode, ref byte[] decode, uint[] key, char mode) // mode - 'E' or 'D'
         {
             for (int i = 0; i < encode.Length; i += 8) // i+8 для прохождения по блокам по 64 бита
             {
@@ -320,7 +321,10 @@ namespace Курсач_Blowfish
                 }
             }
         }
-        private void code_Click(object sender, EventArgs e)
+
+        bool flag = false;
+
+        private void Encode_Click(object sender, EventArgs e)
         {
 
             Decode_text.Text = string.Empty;
@@ -330,28 +334,20 @@ namespace Курсач_Blowfish
                 key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
 
             byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
-            byte[] textEbyte = Encoding.Default.GetBytes(Encode_text.Text);  // массив символов текста в байтах
+            byte[] textEbyte = new byte[Encode_text.Text.Length];  // массив символов текста в байтах
             byte[] textDbyte = new byte[Encode_text.Text.Length];
 
             for (int i = 0; i < Encode_text.Text.Length; i++) textEbyte[i] = (byte)(Encode_text.Text[i]);
-            Encode_text.Text = Encoding.UTF8.GetString(textEbyte);
 
             key_extension(ref __Sbox, ref __Keys32b, KeyByte);
-
-            blowfish(ref textEbyte, ref textDbyte,__Keys32b, 'E');
+            blowfish(ref textEbyte, ref textDbyte, __Keys32b, 'E');
 
             for (int i = 0; i < textDbyte.Length; i++)
                 Decode_text.Text += textDbyte[i] + " ";
-        }
-
-        private void swap_Click(object sender, EventArgs e)
-        {
-            string s = standart_text.Text;
-            s = Encode_text.Text;
-            Encode_text.Text = Decode_text.Text;
-            Decode_text.Text = s;
 
         }
+
+
         private void DeCode_Click(object sender, EventArgs e)
         {
             Decode_text.Text = string.Empty;
@@ -366,10 +362,10 @@ namespace Курсач_Blowfish
             byte[] textDbyte = new byte[Encode_text.Text.Length];  // массив в котрый запишется зашифрованное сообщение
 
             for (int i = 0; i < text_E_List.Length; i++) textEbyte[i] = Convert.ToByte(text_E_List[i]);
-      
+
             key_extension(ref __Sbox, ref __Keys32b, KeyByte);
-            
-            blowfish(ref textEbyte, ref textDbyte,__Keys32b, 'D');
+
+            blowfish(ref textEbyte, ref textDbyte, __Keys32b, 'D');
 
             for (int i = 0; i < textDbyte.Length; i++)
                 Decode_text.Text += (char)textDbyte[i];
@@ -377,15 +373,138 @@ namespace Курсач_Blowfish
 
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            progressBar1.Visible = true;
+            progressBar1.Value = 10;
             openFileDialog1.Title = "Выбор документа для шифровки";
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
-               return;
+            {
+                return;
+            }
+            Stream inputStream = File.OpenRead(openFileDialog1.FileName);
+            long len = inputStream.Length;
+            for (int i = 0; (inputStream.Length + i) % 8 > 0; i++) len++;
+            byte[] textEbyte_file = new byte[len];   // масив байтов
 
-            Encode_text.Text = System.IO.File.ReadAllText(openFileDialog1.FileName);
+            try
+            {   // файловый поток, открывает файл (при отсутсвии создает) только для чтения
+                FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.OpenOrCreate, FileAccess.Read);
+                if (fs.CanSeek == true) // если можно производить поиск
+                {
+                    fs.Seek(00, SeekOrigin.Begin);  // делаем отступ на 55 байт с начала файла
+                    progressBar1.Value = 40;
+                    fs.Read(textEbyte_file, 0, (int)inputStream.Length);
+                }
+                fs.Dispose(); // освобождаем ресурсы
+            }
+            catch (IOException err)
+            {
+                MessageBox.Show(err.Message); return;
+            }
+            progressBar1.Value = 50;
+
+            for (int i = 0; key_text.Text.Length < 72; i++)
+                key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
+
+            byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
+            byte[] textDbyte_file = new byte[len];  // массив в котрый запишется зашифрованное сообщение
+
+            key_extension(ref __Sbox, ref __Keys32b, KeyByte);
+            blowfish(ref textEbyte_file, ref textDbyte_file, __Keys32b, 'E');
+            progressBar1.Value = 70;
+
+            for (int i = 0; i < textDbyte_file.Length; i++)
+                Decode_text.Text += textDbyte_file[i] + " ";
+            for (int i = 0; i < textEbyte_file.Length; i++)
+                Encode_text.Text += (char)textEbyte_file[i];
+
+            progressBar1.Value = 60;
+            string name = openFileDialog1.FileName;
+            name = name.Replace(".", "(encrypted).");
+            try
+            {
+                FileStream fs = new FileStream(name, FileMode.OpenOrCreate, FileAccess.Write);
+                fs.Seek(00, SeekOrigin.Begin);
+                fs.Write(textDbyte_file, 0, (int)inputStream.Length); // запись массива байт
+                fs.Dispose(); // освобождаем ресурсы
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message); return;
+            }
+            progressBar1.Value = 100;
+        }
+        private void расшифроватьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            progressBar1.Visible = true;
+            progressBar1.Value = 0;
+            openFileDialog1.Title = "Выбор документа для расшифровки";
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            Stream inputStream = File.OpenRead(openFileDialog1.FileName);
+            long len = inputStream.Length;
+            for (int i = 0; (inputStream.Length + i) % 8 > 0; i++) len++;
+            byte[] textEbyte_file = new byte[len];   // масив байтов
+
+            try
+            {   // файловый поток, открывает файл (при отсутсвии создает) только для чтения
+                FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.OpenOrCreate, FileAccess.Read);
+                if (fs.CanSeek == true) // если можно производить поиск
+                {
+                    fs.Seek(00, SeekOrigin.Begin);  // делаем отступ на 55 байт с начала файла
+                    progressBar1.Value = 40;
+                    fs.Read(textEbyte_file, 0, (int)inputStream.Length);
+                }
+                fs.Dispose(); // освобождаем ресурсы
+            }
+            catch (IOException err)
+            {
+                MessageBox.Show(err.Message); return;
+            }
+            progressBar1.Value = 50;
+
+            for (int i = 0; key_text.Text.Length < 72; i++)
+                key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
+
+            byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
+            byte[] textDbyte_file = new byte[len];  // массив в котрый запишется зашифрованное сообщение
+
+            key_extension(ref __Sbox, ref __Keys32b, KeyByte);
+            blowfish(ref textEbyte_file, ref textDbyte_file, __Keys32b, 'D');
+
+
+
+            progressBar1.Value = 60;
+            string name = openFileDialog1.FileName;
+            name = name.Replace(".", "(decrypted).");
+            try
+            {
+                FileStream fs = new FileStream(name, FileMode.OpenOrCreate, FileAccess.Write);
+                fs.Seek(00, SeekOrigin.Begin);
+                fs.Write(textDbyte_file, 0, (int)inputStream.Length); // запись массива байт
+                fs.Dispose(); // освобождаем ресурсы
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message); return;
+            }
+            progressBar1.Value = 100;
+        }
+        private void clear_decode_Click(object sender, EventArgs e) { Decode_text.Text = string.Empty; }
+        private void clear_encode_Click(object sender, EventArgs e) { Encode_text.Text = string.Empty; }
+        private void swap_Click(object sender, EventArgs e)
+        {
+            string s = Encode_text.Text;
+            Encode_text.Text = Decode_text.Text;
+            Decode_text.Text = s;
         }
 
-        private void clear_decode_Click(object sender, EventArgs e) { Decode_text.Text = string.Empty; }
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
-        private void clear_encode_Click(object sender, EventArgs e) { Encode_text.Text = string.Empty; }
+        }
+
+
     }
 }
