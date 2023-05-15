@@ -174,9 +174,9 @@
             version.AutoSize = true;
             version.Location = new Point(682, 255);
             version.Name = "version";
-            version.Size = new Size(29, 13);
+            version.Size = new Size(39, 13);
             version.TabIndex = 12;
-            version.Text = "v1.2";
+            version.Text = "v1.2.1";
             // 
             // openFileDialog1
             // 

@@ -345,6 +345,7 @@ namespace Курсач_Blowfish
             for (int i = 0; i < textDbyte.Length; i++)
                 Decode_text.Text += textDbyte[i] + " ";
 
+            key_extension(ref __Sbox, ref __Keys32b, KeyByte);
         }
 
 
@@ -364,11 +365,12 @@ namespace Курсач_Blowfish
             for (int i = 0; i < text_E_List.Length; i++) textEbyte[i] = Convert.ToByte(text_E_List[i]);
 
             key_extension(ref __Sbox, ref __Keys32b, KeyByte);
-
             blowfish(ref textEbyte, ref textDbyte, __Keys32b, 'D');
 
             for (int i = 0; i < textDbyte.Length; i++)
                 Decode_text.Text += (char)textDbyte[i];
+
+            key_extension(ref __Sbox, ref __Keys32b, KeyByte);
         }
 
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -431,6 +433,7 @@ namespace Курсач_Blowfish
             {
                 MessageBox.Show(err.Message); return;
             }
+            key_extension(ref __Sbox, ref __Keys32b, KeyByte);
             progressBar1.Value = 100;
         }
         private void расшифроватьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -473,8 +476,6 @@ namespace Курсач_Blowfish
             key_extension(ref __Sbox, ref __Keys32b, KeyByte);
             blowfish(ref textEbyte_file, ref textDbyte_file, __Keys32b, 'D');
 
-
-
             progressBar1.Value = 60;
             string name = openFileDialog1.FileName;
             name = name.Replace(".", "(decrypted).");
@@ -490,6 +491,7 @@ namespace Курсач_Blowfish
                 MessageBox.Show(err.Message); return;
             }
             progressBar1.Value = 100;
+            key_extension(ref __Sbox, ref __Keys32b, KeyByte);
         }
         private void clear_decode_Click(object sender, EventArgs e) { Decode_text.Text = string.Empty; }
         private void clear_encode_Click(object sender, EventArgs e) { Encode_text.Text = string.Empty; }
