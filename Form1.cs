@@ -353,19 +353,28 @@ namespace Курсач_Blowfish
         {
             Decode_text.Text = string.Empty;
 
-            string[] text_E_List = Encode_text.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] textStrEn = Encode_text.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; key_text.Text.Length < 72; i++)
                 key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
 
             byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
-            byte[] textEbyte = new byte[text_E_List.Length];
+            byte[] textEbyte = new byte[textStrEn.Length];
             byte[] textDbyte = new byte[Encode_text.Text.Length];  // массив в котрый запишется зашифрованное сообщение
 
-            for (int i = 0; i < text_E_List.Length; i++) textEbyte[i] = Convert.ToByte(text_E_List[i]);
-
-            key_extension(ref __Sbox, ref __Keys32b, KeyByte);
-            blowfish(ref textEbyte, ref textDbyte, __Keys32b, 'D');
+            try
+            {
+                for (int i = 0; i < textStrEn.Length; i++) textEbyte[i] = Convert.ToByte(textStrEn[i]);
+                key_extension(ref __Sbox, ref __Keys32b, KeyByte);
+                blowfish(ref textEbyte, ref textDbyte, __Keys32b, 'D');
+            }
+            catch (Exception)
+            {
+                for (int i = 0; i < textEbyte.Length; i++)
+                    textEbyte[i] = 0;
+                Encode_text.Text = string.Empty;
+                MessageBox.Show("Не делай так больше!");
+            }
 
             for (int i = 0; i < textDbyte.Length; i++)
                 Decode_text.Text += (char)textDbyte[i];
@@ -413,11 +422,6 @@ namespace Курсач_Blowfish
             key_extension(ref __Sbox, ref __Keys32b, KeyByte);
             blowfish(ref textEbyte_file, ref textDbyte_file, __Keys32b, 'E');
             progressBar1.Value = 70;
-
-            for (int i = 0; i < textDbyte_file.Length; i++)
-                Decode_text.Text += textDbyte_file[i] + " ";
-            for (int i = 0; i < textEbyte_file.Length; i++)
-                Encode_text.Text += (char)textEbyte_file[i];
 
             progressBar1.Value = 60;
             string name = openFileDialog1.FileName;

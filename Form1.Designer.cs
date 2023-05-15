@@ -46,11 +46,9 @@
             openFileDialog1 = new OpenFileDialog();
             clear_encode = new Button();
             clear_decode = new Button();
-            pictureBox1 = new PictureBox();
             progressBar1 = new ProgressBar();
             timer1 = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // Encode_text
@@ -67,7 +65,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(725, 24);
+            menuStrip1.Size = new Size(592, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -172,11 +170,11 @@
             // version
             // 
             version.AutoSize = true;
-            version.Location = new Point(682, 255);
+            version.Location = new Point(537, 251);
             version.Name = "version";
             version.Size = new Size(39, 13);
             version.TabIndex = 12;
-            version.Text = "v1.2.1";
+            version.Text = "v1.2.2";
             // 
             // openFileDialog1
             // 
@@ -203,14 +201,6 @@
             clear_decode.UseVisualStyleBackColor = true;
             clear_decode.Click += clear_decode_Click;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(593, 69);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(118, 155);
-            pictureBox1.TabIndex = 15;
-            pictureBox1.TabStop = false;
-            // 
             // progressBar1
             // 
             progressBar1.Location = new Point(257, 27);
@@ -223,9 +213,8 @@
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(725, 277);
+            ClientSize = new Size(592, 277);
             Controls.Add(progressBar1);
-            Controls.Add(pictureBox1);
             Controls.Add(clear_decode);
             Controls.Add(clear_encode);
             Controls.Add(version);
@@ -245,7 +234,6 @@
             Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -268,7 +256,6 @@
         private OpenFileDialog openFileDialog1;
         private Button clear_encode;
         private Button clear_decode;
-        private PictureBox pictureBox1;
         private ProgressBar progressBar1;
         private System.Windows.Forms.Timer timer1;
         private ToolStripMenuItem расшифроватьToolStripMenuItem;
