@@ -53,19 +53,22 @@
             // 
             // Encode_text
             // 
-            Encode_text.Location = new Point(13, 69);
+            Encode_text.Location = new Point(22, 133);
+            Encode_text.Margin = new Padding(5, 6, 5, 6);
             Encode_text.Multiline = true;
             Encode_text.Name = "Encode_text";
             Encode_text.ScrollBars = ScrollBars.Vertical;
-            Encode_text.Size = new Size(238, 155);
+            Encode_text.Size = new Size(394, 294);
             Encode_text.TabIndex = 0;
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(24, 24);
             menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(592, 24);
+            menuStrip1.Padding = new Padding(10, 4, 0, 4);
+            menuStrip1.Size = new Size(987, 37);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -73,66 +76,71 @@
             // 
             файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { загрузитьToolStripMenuItem, расшифроватьToolStripMenuItem });
             файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            файлToolStripMenuItem.Size = new Size(45, 20);
+            файлToolStripMenuItem.Size = new Size(68, 29);
             файлToolStripMenuItem.Text = "файл";
             // 
             // загрузитьToolStripMenuItem
             // 
             загрузитьToolStripMenuItem.Name = "загрузитьToolStripMenuItem";
-            загрузитьToolStripMenuItem.Size = new Size(149, 22);
+            загрузитьToolStripMenuItem.Size = new Size(234, 34);
             загрузитьToolStripMenuItem.Text = "Зашифровать";
             загрузитьToolStripMenuItem.Click += загрузитьToolStripMenuItem_Click;
             // 
             // расшифроватьToolStripMenuItem
             // 
             расшифроватьToolStripMenuItem.Name = "расшифроватьToolStripMenuItem";
-            расшифроватьToolStripMenuItem.Size = new Size(149, 22);
+            расшифроватьToolStripMenuItem.Size = new Size(234, 34);
             расшифроватьToolStripMenuItem.Text = "Расшифровать";
             расшифроватьToolStripMenuItem.Click += расшифроватьToolStripMenuItem_Click;
             // 
             // standart_text
             // 
             standart_text.AutoSize = true;
-            standart_text.Location = new Point(73, 53);
+            standart_text.Location = new Point(122, 102);
+            standart_text.Margin = new Padding(5, 0, 5, 0);
             standart_text.Name = "standart_text";
-            standart_text.Size = new Size(109, 13);
+            standart_text.Size = new Size(164, 25);
             standart_text.TabIndex = 2;
             standart_text.Text = "Стандартный текст";
             // 
             // Key
             // 
             Key.AutoSize = true;
-            Key.Location = new Point(13, 227);
+            Key.Location = new Point(22, 437);
+            Key.Margin = new Padding(5, 0, 5, 0);
             Key.Name = "Key";
-            Key.Size = new Size(35, 13);
+            Key.Size = new Size(56, 25);
             Key.TabIndex = 3;
             Key.Text = "Ключ";
             // 
             // Decode_text
             // 
             Decode_text.Cursor = Cursors.IBeam;
-            Decode_text.Location = new Point(338, 69);
+            Decode_text.Location = new Point(563, 133);
+            Decode_text.Margin = new Padding(5, 6, 5, 6);
             Decode_text.Multiline = true;
             Decode_text.Name = "Decode_text";
             Decode_text.ReadOnly = true;
             Decode_text.ScrollBars = ScrollBars.Vertical;
-            Decode_text.Size = new Size(238, 155);
+            Decode_text.Size = new Size(394, 294);
             Decode_text.TabIndex = 4;
             // 
             // shifr_text
             // 
             shifr_text.AutoSize = true;
-            shifr_text.Location = new Point(404, 53);
+            shifr_text.Location = new Point(673, 102);
+            shifr_text.Margin = new Padding(5, 0, 5, 0);
             shifr_text.Name = "shifr_text";
-            shifr_text.Size = new Size(117, 13);
+            shifr_text.Size = new Size(186, 25);
             shifr_text.TabIndex = 5;
             shifr_text.Text = "Зашифрованый текст";
             // 
             // Encode
             // 
-            Encode.Location = new Point(12, 27);
+            Encode.Location = new Point(20, 52);
+            Encode.Margin = new Padding(5, 6, 5, 6);
             Encode.Name = "Encode";
-            Encode.Size = new Size(99, 23);
+            Encode.Size = new Size(165, 44);
             Encode.TabIndex = 6;
             Encode.Text = "Зашифровать";
             Encode.UseVisualStyleBackColor = true;
@@ -140,18 +148,20 @@
             // 
             // key_text
             // 
-            key_text.Location = new Point(13, 243);
+            key_text.Location = new Point(22, 467);
+            key_text.Margin = new Padding(5, 6, 5, 6);
             key_text.MaxLength = 72;
             key_text.Name = "key_text";
-            key_text.Size = new Size(319, 21);
+            key_text.Size = new Size(529, 31);
             key_text.TabIndex = 7;
             key_text.Text = "Random Key";
             // 
             // swap_button
             // 
-            swap_button.Location = new Point(257, 135);
+            swap_button.Location = new Point(428, 260);
+            swap_button.Margin = new Padding(5, 6, 5, 6);
             swap_button.Name = "swap_button";
-            swap_button.Size = new Size(75, 23);
+            swap_button.Size = new Size(125, 44);
             swap_button.TabIndex = 10;
             swap_button.Text = "<--->";
             swap_button.UseVisualStyleBackColor = true;
@@ -159,9 +169,10 @@
             // 
             // DeCode
             // 
-            DeCode.Location = new Point(117, 27);
+            DeCode.Location = new Point(195, 52);
+            DeCode.Margin = new Padding(5, 6, 5, 6);
             DeCode.Name = "DeCode";
-            DeCode.Size = new Size(99, 23);
+            DeCode.Size = new Size(165, 44);
             DeCode.TabIndex = 11;
             DeCode.Text = "Расшифровать";
             DeCode.UseVisualStyleBackColor = true;
@@ -170,9 +181,10 @@
             // version
             // 
             version.AutoSize = true;
-            version.Location = new Point(537, 251);
+            version.Location = new Point(895, 483);
+            version.Margin = new Padding(5, 0, 5, 0);
             version.Name = "version";
-            version.Size = new Size(39, 13);
+            version.Size = new Size(59, 25);
             version.TabIndex = 12;
             version.Text = "v1.2.2";
             // 
@@ -183,9 +195,10 @@
             // 
             // clear_encode
             // 
-            clear_encode.Location = new Point(257, 82);
+            clear_encode.Location = new Point(428, 158);
+            clear_encode.Margin = new Padding(5, 6, 5, 6);
             clear_encode.Name = "clear_encode";
-            clear_encode.Size = new Size(75, 23);
+            clear_encode.Size = new Size(125, 44);
             clear_encode.TabIndex = 13;
             clear_encode.Text = "<-- Clear";
             clear_encode.UseVisualStyleBackColor = true;
@@ -193,9 +206,10 @@
             // 
             // clear_decode
             // 
-            clear_decode.Location = new Point(257, 186);
+            clear_decode.Location = new Point(428, 358);
+            clear_decode.Margin = new Padding(5, 6, 5, 6);
             clear_decode.Name = "clear_decode";
-            clear_decode.Size = new Size(75, 23);
+            clear_decode.Size = new Size(125, 44);
             clear_decode.TabIndex = 14;
             clear_decode.Text = "Clear -->";
             clear_decode.UseVisualStyleBackColor = true;
@@ -203,17 +217,18 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(257, 27);
+            progressBar1.Location = new Point(428, 52);
+            progressBar1.Margin = new Padding(5, 6, 5, 6);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(75, 23);
+            progressBar1.Size = new Size(125, 44);
             progressBar1.TabIndex = 16;
             progressBar1.Visible = false;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(592, 277);
+            ClientSize = new Size(987, 533);
             Controls.Add(progressBar1);
             Controls.Add(clear_decode);
             Controls.Add(clear_encode);
@@ -229,6 +244,7 @@
             Controls.Add(Encode_text);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(5, 6, 5, 6);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
