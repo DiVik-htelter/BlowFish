@@ -399,12 +399,12 @@ namespace Курсач_Blowfish
     0xc0ac29b7, 0xc97c50dd, 0x3f84d5b5, 0xb5470917, 0x9216d5d9, 0x8979fb1b,
         };
 
-        void init_Sbox_Key32b()
+        void init_Sbox_Key32b() // нужет, потому что одни масссивы изменяются в процессе работы программы, что бы шифрование было всегда с начальными значениями
         {
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 256; j++)
                     _Sbox[i, j] = __Sbox[i, j];
-            for(int i = 0;i<18;i++)
+            for (int i = 0; i < 18; i++)
                 _Keys32b[i] = __Keys32b[i];
         }
         void swap(ref uint a, ref uint b)
@@ -419,21 +419,9 @@ namespace Курсач_Blowfish
             for (int i = n; i < n + 4; i++) block32b = (block32b << 8) | blocks8b[i];
             return block32b;
         }
-        ulong join_32bits_to_64bits(uint block32b_1, uint block32b_2)
-        {
-            ulong block64b = 0;
-            block64b = (block64b << 32) | block32b_1;
-            block64b = (block64b << 32) | block32b_2;
-            return block64b;
-        }
         void split_32bits_to_8bits(uint block32b, ref byte[] blocks8b)
         {
             for (byte i = 0; i < 4; ++i) blocks8b[i] = (byte)(block32b >> (24 - (i * 8)));
-        }
-        void split_64bits_to_32bits(ulong block64b, ref uint block32b_1, ref uint block32b_2)
-        {
-            block32b_1 = Convert.ToUInt32(block64b >> 32);
-            block32b_2 = Convert.ToUInt32(block64b << 32 >> 32);
         }
         void feistel_cipher(char mode, ref uint N1, ref uint N2, ref uint[] keys32b)
         {
@@ -472,15 +460,14 @@ namespace Курсач_Blowfish
             byte[] blocks8b = new byte[4];
             split_32bits_to_8bits(block32b, ref blocks8b);
             block32b = _Sbox[0, blocks8b[0]];
-            block32b +=_Sbox[1, blocks8b[1]];
-            block32b ^=_Sbox[2, blocks8b[2]];
-            block32b +=_Sbox[3, blocks8b[3]];
+            block32b += _Sbox[1, blocks8b[1]];
+            block32b ^= _Sbox[2, blocks8b[2]];
+            block32b += _Sbox[3, blocks8b[3]];
             return block32b;
         }
         void key_extension(ref uint[,] Sbox, ref uint[] key, byte[] KeyByte)
         {
-            init_Sbox_Key32b(); 
-            for (int i = 0; i < key_text.Text.Length; i++) KeyByte[i] = (byte)(key_text.Text[i]);
+            init_Sbox_Key32b();
             for (int i = 0; i < 18; i++) // ксорим ключи
                 key[i] ^= join_8bits_to_32bits(ref KeyByte, i);
 
@@ -526,15 +513,12 @@ namespace Курсач_Blowfish
 
             Decode_text.Text = string.Empty;
             for (; Encode_text.Text.Length % 8 > 0;) Encode_text.Text += ' '; // достраиваем что бы были блоки по 8 байт(64 бита)
-
-            for (int i = 0; key_text.Text.Length < 56; i++)
-                key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
-
-            byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
+            byte[] KeyByte = new byte[56];  // массив символов ключа в байтах
             byte[] textEbyte = new byte[Encode_text.Text.Length];  // массив символов текста в байтах
             byte[] textDbyte = new byte[Encode_text.Text.Length];
 
             for (int i = 0; i < Encode_text.Text.Length; i++) textEbyte[i] = (byte)(Encode_text.Text[i]);
+            for (int i = 0; i < key_text.Text.Length; i++) KeyByte[i] = (byte)(key_text.Text[i]);
 
             key_extension(ref _Sbox, ref _Keys32b, KeyByte);
             blowfish(ref textEbyte, ref textDbyte, _Keys32b, 'E');
@@ -551,12 +535,11 @@ namespace Курсач_Blowfish
 
             string[] textStrEn = Encode_text.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 0; key_text.Text.Length < 56; i++)
-                key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
 
-            byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
+            byte[] KeyByte = new byte[56];  // массив символов ключа в байтах
             byte[] textEbyte = new byte[textStrEn.Length];
             byte[] textDbyte = new byte[Encode_text.Text.Length];  // массив в котрый запишется зашифрованное сообщение
+            for (int i = 0; i < key_text.Text.Length; i++) KeyByte[i] = (byte)(key_text.Text[i]);
 
             try
             {
@@ -582,8 +565,8 @@ namespace Курсач_Blowfish
             progressBar1.Value = 10;
             openFileDialog1.Title = "Выбор документа для шифровки";
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
-               return;
-            
+                return;
+
             Stream inputStream = File.OpenRead(openFileDialog1.FileName);
             long len = inputStream.Length;
             for (int i = 0; (inputStream.Length + i) % 8 > 0; i++) len++;
@@ -606,11 +589,9 @@ namespace Курсач_Blowfish
             }
             progressBar1.Value = 50;
 
-            for (int i = 0; key_text.Text.Length < 56; i++)
-                key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
-
-            byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
+            byte[] KeyByte = new byte[56];  // массив символов ключа в байтах
             byte[] textDbyte_file = new byte[len];  // массив в котрый запишется зашифрованное сообщение
+            for (int i = 0; i < key_text.Text.Length; i++) KeyByte[i] = (byte)(key_text.Text[i]);
 
             key_extension(ref _Sbox, ref _Keys32b, KeyByte);
             blowfish(ref textEbyte_file, ref textDbyte_file, _Keys32b, 'E');
@@ -663,11 +644,9 @@ namespace Курсач_Blowfish
             }
             progressBar1.Value = 50;
 
-            for (int i = 0; key_text.Text.Length < 56; i++)
-                key_text.Text += key_text.Text.Substring(i, 1);     // достраиваем ключ до 72 байтов(576 бит)(18 раундов)
-
-            byte[] KeyByte = new byte[key_text.Text.Length];  // массив символов ключа в байтах
+            byte[] KeyByte = new byte[56];  // массив символов ключа в байтах
             byte[] textDbyte_file = new byte[len];  // массив в котрый запишется зашифрованное сообщение
+            for (int i = 0; i < key_text.Text.Length; i++) KeyByte[i] = (byte)(key_text.Text[i]);
 
             key_extension(ref _Sbox, ref _Keys32b, KeyByte);
             blowfish(ref textEbyte_file, ref textDbyte_file, _Keys32b, 'D');
@@ -695,11 +674,6 @@ namespace Курсач_Blowfish
             string s = Encode_text.Text;
             Encode_text.Text = Decode_text.Text;
             Decode_text.Text = s;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
