@@ -604,7 +604,7 @@ namespace Курсач_Blowfish
             {
                 FileStream fs = new FileStream(name, FileMode.OpenOrCreate, FileAccess.Write);
                 fs.Seek(00, SeekOrigin.Begin);
-                fs.Write(textDbyte_file, 0, (int)inputStream.Length); // запись массива байт
+                fs.Write(textDbyte_file, 0,Convert.ToInt32( len)); // запись массива байт
                 fs.Dispose(); // освобождаем ресурсы
             }
             catch (Exception err)
@@ -612,6 +612,7 @@ namespace Курсач_Blowfish
                 MessageBox.Show(err.Message); return;
             }
             progressBar1.Value = 100;
+            inputStream.Close();
         }
         private void расшифроватьToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -658,7 +659,7 @@ namespace Курсач_Blowfish
             {
                 FileStream fs = new FileStream(name, FileMode.OpenOrCreate, FileAccess.Write);
                 fs.Seek(00, SeekOrigin.Begin);
-                fs.Write(textDbyte_file, 0, (int)inputStream.Length); // запись массива байт
+                fs.Write(textDbyte_file, 0, Convert.ToInt32(len)); // запись массива байт
                 fs.Dispose(); // освобождаем ресурсы
             }
             catch (Exception err)
@@ -666,6 +667,7 @@ namespace Курсач_Blowfish
                 MessageBox.Show(err.Message); return;
             }
             progressBar1.Value = 100;
+            inputStream.Close();
         }
         private void clear_decode_Click(object sender, EventArgs e) { Decode_text.Text = string.Empty; }
         private void clear_encode_Click(object sender, EventArgs e) { Encode_text.Text = string.Empty; }
